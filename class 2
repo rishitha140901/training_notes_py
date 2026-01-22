@@ -1,0 +1,76 @@
+Hadoop – Detailed Explanation
+Hadoop Overview
+
+Hadoop works on distributed storage and parallel processing.
+
+Data is stored across multiple machines.
+
+Hadoop Components
+
+HDFS (Storage layer)
+
+MapReduce (Processing layer)
+
+HDFS (Hadoop Distributed File System)
+
+Stores large data across multiple nodes.
+
+Data is split into blocks and replicated.
+
+Components:
+
+NameNode – stores metadata.
+
+DataNode – stores actual data.
+
+Hadoop Processing – MapReduce
+
+Map phase
+
+Input data is split into smaller parts.
+
+Processed in parallel.
+
+Reduce phase
+
+Aggregates output from map phase.
+
+Spark – Detailed Explanation
+Spark Overview
+
+Spark uses in-memory processing, making it faster than Hadoop.
+
+Reduces disk I/O operations.
+
+Spark Architecture
+
+Driver Program – controls execution.
+
+Cluster Manager – allocates resources.
+
+Executors – perform computations.
+
+Spark Layers
+
+Spark Core
+
+Spark SQL
+
+Spark Streaming
+
+MLlib
+
+GraphX
+
+MapReduce Concept in Spark
+
+Spark performs operations using DAG (Directed Acyclic Graph).
+
+Faster and optimized compared to traditional MapReduce.
+
+Hadoop vs Spark
+Hadoop	Spark
+Disk-based processing	In-memory processing
+Slower execution	Faster execution
+High fault tolerance	High performance
+Uses MapReduce	Uses DAG execution
