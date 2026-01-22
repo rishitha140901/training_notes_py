@@ -1,0 +1,94 @@
+CLASS 1
+Data and Information
+
+Data is raw, unprocessed facts.
+
+Information is meaningful insights derived from data.
+
+Types of Data
+
+Structured data – stored in tables (rows and columns).
+
+Unstructured data – text, images, videos, emails.
+
+Semi-structured data – JSON, XML, logs.
+
+Data Storage
+
+Relational databases
+
+JSON files
+
+Key-value storage
+
+Distributed storage systems
+
+ETL and ELT
+
+ETL (Extract → Transform → Load)
+
+Data is transformed before loading into storage.
+
+ELT (Extract → Load → Transform)
+
+Data is loaded first, then transformed.
+
+ELT is more cost-effective, especially in cloud environments, because cloud systems can handle transformation at scale.
+
+Batch Processing
+
+Data is collected over a period of time.
+
+Processed at fixed intervals (daily, weekly).
+
+Suitable for large volumes of data.
+
+Change Data Capture (CDC)
+
+Captures only changes made in source systems.
+
+Avoids full data reload.
+
+Improves performance and efficiency.
+
+Data Pipelines
+
+A data pipeline is a flow that moves data from source to destination.
+
+Should be:
+
+Modular
+
+Reusable
+
+Fault-tolerant
+
+Includes ingestion, processing, and storage stages.
+
+Data Warehouse
+
+A Data Warehouse stores structured and processed data.
+
+Used for analytics and reporting.
+
+Separates analytical workload from transactional systems.
+
+Data Warehouse Layers (Medallion Architecture)
+
+Bronze – raw data
+
+Silver – cleaned and transformed data
+
+Gold – aggregated, analytics-ready data
+
+Definition of Hadoop
+
+Hadoop is a distributed framework used to store and process large volumes of data.
+
+Designed for big data and parallel processing.
+
+Definition of Spark
+
+Apache Spark is a fast, in-memory data processing engine.
+
+Designed to process large-scale data efficiently.
