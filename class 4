@@ -1,0 +1,277 @@
+SELECT *
+Used to retrieve all records from a table.
+SELECT * FROM students;
+________________________________________
+SELECT DISTINCT
+Used to return only unique values from a column.
+SELECT DISTINCT department FROM employees;
+________________________________________
+SELECT COUNT(*)
+Used to count the total number of rows in a table.
+SELECT COUNT(*) FROM orders;
+________________________________________
+LIMIT
+Used to restrict the number of records returned.
+SELECT * FROM products LIMIT 5;
+WHERE (Filtering)
+Used to filter records based on conditions.
+SELECT * FROM abc WHERE xyz = 'L' AND length >= 92;
+________________________________________
+ORDER BY (Sorting)
+Used to sort the result in ascending or descending order.
+SELECT * FROM abc ORDER BY marks DESC;
+________________________________________
+AND / OR Operators
+Used to combine multiple conditions in a WHERE clause.
+SELECT * FROM abc WHERE age > 18 AND city = 'NY';
+________________________________________
+NOT Operator
+Used to exclude records that match a condition.
+SELECT * FROM abc WHERE city NOT IN ('NY', 'LA');
+SELECT * FROM students WHERE grade NOT = 'A';
+→ returns students whose grade is not A
+
+NOT IN
+Used to exclude multiple values from a result.
+Example:
+SELECT * FROM students WHERE city NOT IN ('NY', 'LA', 'TX');
+→ returns students whose city is not NY, LA, or TX
+•  NOT excludes a single condition
+•  NOT IN excludes multiple values
+
+________________________________________
+LIKE (Pattern Matching)
+Used with WHERE to search for a specific pattern in a column.
+SELECT * FROM abc WHERE name LIKE 'A%';
+
+Wildcards used with LIKE
+There are two wildcards commonly used with the LIKE operator:
+________________________________________
+% (percent sign)
+Represents zero, one, or multiple characters.
+Example:
+SELECT * FROM table_name WHERE name LIKE 'A%';
+→ retrieves words that start with A
+________________________________________
+_ (underscore)
+Represents exactly one single character.
+Example:
+SELECT * FROM table_name WHERE name LIKE 'A_';
+→ retrieves words with two characters, starting with A
+________________________________________
+Using position-based matching
+When we know the exact position of characters, _ is used.
+Example:
+SELECT * FROM table_name WHERE word LIKE '_s_a___';
+Explanation:
+•	_ → any single character
+•	s → must be in 2nd position
+•	_ → any single character
+•	a → must be in 4th position
+•	___ → any three characters
+This retrieves words where s is in the 2nd position and a is in the 4th position.
+________________________________________
+Understanding given examples
+%A%A
+•	% → any characters before
+•	A → first A
+•	% → any characters in between
+•	A → second A
+→ retrieves words that contain the letter A at least twice.
+________________________________________
+A%s
+•	A → word must start with A
+•	% → any number of characters in between
+•	s → word must end with s
+→ retrieves words that start with A and end with s, regardless of length.
+________________________________________
+Important Note
+•	Pattern matching using LIKE is case-sensitive (depends on database settings).
+•	Uppercase and lowercase letters are treated as different values.
+________________________________________
+One-line exam memory
+•	% → many characters
+•	_ → one character
+•	NULL values
+NULL means the value is missing or unknown.
+To check NULL values, we use IS NULL (not =).
+•	Example:
+SELECT name FROM students WHERE email IS NULL;
+→ retrieves students whose email is not provided.
+•	________________________________________
+•	BETWEEN
+BETWEEN is used to filter values within a specific range (both limits included).
+•	Example:
+SELECT name FROM students WHERE marks BETWEEN 60 AND 90;
+→ retrieves students whose marks are between 60 and 90.
+GROUP BY is used to combine rows that have the same value in a column and treat them as one group.
+HAVING is used to filter those groups.
+SELECT customer_id, COUNT(*) AS count
+FROM abc
+GROUP BY customer_id
+HAVING COUNT(*) <= 30
+ORDER BY count DESC;
+•  Rows are grouped by customer_id
+•  COUNT(*) calculates how many times each customer appears
+•  HAVING filters the grouped result
+•  ORDER BY sorts the output in descending order
+What GROUP BY does
+GROUP BY combines rows with the same value into one group.
+After grouping, SQL can display only:
+•	The column used in GROUP BY
+•	Aggregate functions like SUM, COUNT, AVG, MIN, MAX
+Individual row values cannot be displayed after grouping.
+________________________________________
+Why GROUP BY is needed
+If a table has 1000 rows of sales data:
+•	“Total sales” → one result
+•	“Total sales per city” → multiple results
+GROUP BY allows SQL to return one result per group.
+GROUP BY rule (very important)
+Every column in the SELECT statement must:
+•	Be included in GROUP BY, or
+•	Be used inside an aggregate function
+SELECT city, SUM(amount)
+FROM sales
+GROUP BY city
+HAVING SUM(amount) > 250;
+SQL execution order
+FROM
+JOIN
+WHERE
+GROUP BY
+HAVING
+SELECT
+ORDER BY
+LIMIT
+HAVING condition rule
+The condition used in HAVING must reference:
+•	The same column used in GROUP BY, or
+•	An aggregate function on that column
+Difference between WHERE and HAVING
+•	WHERE works at the row level
+•	HAVING works at the group level
+________________________________________
+Important note
+GROUP BY and HAVING are commonly used to identify duplicate records in a table.
+/* ===============================
+   TABLE CREATION
+   =============================== */
+
+CREATE TABLE customers (
+    customer_id INT,
+    name VARCHAR(50),
+    city VARCHAR(50),
+    email VARCHAR(100),
+    amount INT
+);
+
+/* ===============================
+   INSERT SAMPLE DATA
+   =============================== */
+
+INSERT INTO customers VALUES (1, 'Alice', 'NY', 'alice@gmail.com', 300);
+INSERT INTO customers VALUES (2, 'Bob', 'LA', NULL, 150);
+INSERT INTO customers VALUES (3, 'Alice', 'NY', 'alice@gmail.com', 200);
+INSERT INTO customers VALUES (4, 'David', 'TX', NULL, 400);
+INSERT INTO customers VALUES (5, 'Eva', 'NY', 'eva@gmail.com', 100);
+
+/* ===============================
+   SELECT STATEMENTS
+   =============================== */
+
+-- Select all records
+SELECT * FROM customers;
+
+-- Select unique cities
+SELECT DISTINCT city FROM customers;
+
+-- Count total rows
+SELECT COUNT(*) FROM customers;
+
+-- Limit records
+SELECT * FROM customers LIMIT 3;
+
+/* ===============================
+   WHERE FILTERING
+   =============================== */
+
+-- Filter using AND
+SELECT * FROM customers
+WHERE city = 'NY' AND amount >= 150;
+
+-- OR condition
+SELECT * FROM customers
+WHERE city = 'NY' OR city = 'LA';
+
+/* ===============================
+   NOT and NOT IN
+   =============================== */
+
+SELECT * FROM customers
+WHERE city NOT = 'NY';
+
+SELECT * FROM customers
+WHERE city NOT IN ('NY', 'LA');
+
+/* ===============================
+   LIKE with WILDCARDS
+   =============================== */
+
+-- Starts with A
+SELECT * FROM customers
+WHERE name LIKE 'A%';
+
+-- Ends with a
+SELECT * FROM customers
+WHERE name LIKE '%a';
+
+-- Position based (_ wildcard)
+SELECT * FROM customers
+WHERE name LIKE '_l_ce';
+
+/* ===============================
+   NULL CHECK
+   =============================== */
+
+SELECT * FROM customers
+WHERE email IS NULL;
+
+/* ===============================
+   BETWEEN
+   =============================== */
+
+SELECT * FROM customers
+WHERE amount BETWEEN 100 AND 300;
+
+/* ===============================
+   ORDER BY
+   =============================== */
+
+SELECT * FROM customers
+ORDER BY amount DESC;
+
+/* ===============================
+   GROUP BY and HAVING
+   (Checking duplicates)
+   =============================== */
+
+SELECT customer_id, COUNT(*) AS count
+FROM customers
+GROUP BY customer_id
+HAVING COUNT(*) > 1
+ORDER BY count DESC;
+
+/* ===============================
+   GROUP BY with AGGREGATE
+   =============================== */
+
+SELECT city, SUM(amount)
+FROM customers
+GROUP BY city
+HAVING SUM(amount) > 250;
+
+/* ===============================
+   EXECUTION ORDER (LOGICAL)
+   FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT
+   ============================ */
