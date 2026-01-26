@@ -1,0 +1,89 @@
+use sakila;
+select first_name, active 
+from sakila.customer
+where first_name LIKE  'j%' and active=1
+
+select title,description
+from sakila.film
+where title like '%action%' or 
+description like '%war%'
+
+select first_name, last_name 
+from sakila.customer
+where last_name != 'smith' and
+first_name like '%a'
+
+DESCRIBE sakila.film;
+select rental_rate,replacement_cost
+from sakila.film
+where rental_rate >= 3.0 and
+replacement_cost is not null
+
+select store_id,count(customer_id)
+from sakila.customer
+where active =1
+group by store_id 
+
+DESCRIBE sakila.film;
+
+SELECT rating
+FROM sakila.film
+GROUP BY rating;
+SELECT DISTINCT rating
+from sakila.film
+
+select rental_duration,count(film_id)
+from sakila.film
+group by rental_duration
+having avg(length)>100
+
+select payment_date,count(customer_id),sum(amount) 
+from sakila.payment
+group by payment_date 
+having count(customer_id)>100
+
+select customer_id 
+from sakila.customer 
+where email is NULL or  
+email like '%.org'
+
+select film_id,title,rating,rental_rate 
+from sakila.film
+where rating='pg' or rating = 'g' 
+order by rental_rate desc 
+
+SELECT length, COUNT(film_id)
+FROM sakila.film
+WHERE title LIKE 'T%'
+GROUP BY length
+HAVING COUNT(film_id) > 5;
+
+select a.actor_id,a.first_name,a.last_name
+from sakila.actor a 
+join sakila.film_actor fa
+on a.actor_id =fa.actor_id
+group by a.actor_id,a.first_name,a.last_name 
+having count(film_id)>10
+
+select title
+from sakila.film
+order by rental_rate desc , length desc 
+limit 5
+
+
+select c.customer_id,c.first_name,c.last_name
+From sakila.customer c
+left join sakila.rental r 
+on c.customer_id=r.customer_id
+group by c.customer_id,c.first_name,c.last_name 
+
+order by count(r.rental_id) desc 
+
+
+select f.title
+from sakila.film f 
+left join sakila.inventory i 
+on i.film_id=f.film_id
+left join sakila.rental r 
+on r.inventory_id=i.inventory_id
+where r.rental_id is null
