@@ -1,0 +1,289 @@
+String Data Types
+
+String data types are used to store text data such as names, titles, emails, etc.
+Common string types are CHAR, VARCHAR, and TEXT.
+
+Example:
+
+SELECT title 
+FROM sakila.film;
+
+
+This retrieves all movie titles stored as strings.
+
+Built-in String Functions
+
+MySQL provides many built-in functions to manipulate string data.
+
+LPAD and RPAD
+
+Used to pad characters to the left or right of a string.
+
+SELECT title,
+LPAD(RPAD(title,20,'*'),25,'*') AS left_padded
+FROM sakila.film
+LIMIT 5;
+
+
+Explanation:
+
+RPAD(title,20,'*') → pads * to the right until length is 20
+
+LPAD(...,25,'*') → pads * to the left until length is 25
+
+Used mainly for formatting output
+
+SUBSTRING
+
+Used to extract a portion of a string.
+
+SELECT title,
+SUBSTRING(title,3,9) AS short_title
+FROM sakila.film;
+
+
+Explanation:
+
+Starts from position 3
+
+Extracts 9 characters
+
+Useful when only part of a string is required
+
+Concatenation
+
+Used to combine multiple strings into one.
+
+SELECT CONCAT(first_name,'@',last_name) AS full_name
+FROM sakila.customer;
+
+
+This joins first name and last name with @ in between.
+
+REVERSE
+
+Used to reverse the characters in a string.
+
+SELECT title,
+REVERSE(title) AS reversed_title
+FROM sakila.film
+LIMIT 5;
+
+LENGTH
+
+Used to find the number of characters in a string.
+
+SELECT title,
+LENGTH(title) AS title_length
+FROM sakila.film
+WHERE LENGTH(title) = 8;
+
+
+This returns titles whose length is exactly 8 characters.
+
+SUBSTRING with LOCATE
+
+LOCATE() finds the position of a character in a string.
+
+SELECT email,
+SUBSTRING(email, LOCATE('@', email) + 1) AS domain
+FROM sakila.customer;
+
+
+Explanation using abc@gmail.com:
+
+LOCATE('@',email) → position of @
+
++1 → starts from g
+
+Result → gmail.com
+
+If -1 was used, it would include characters before @.
+
+SUBSTRING_INDEX
+
+Used to extract strings before or after a delimiter.
+
+SELECT email,
+SUBSTRING_INDEX(SUBSTRING(email, LOCATE('@',email)+1), '.', -1) AS domain
+FROM sakila.customer;
+
+
+Explanation:
+
+First breaks the string till @
+
+Then breaks at .
+
+-1 → gives right-side part (com)
+
++1 would give left-side (gmail)
+
+SELECT SUBSTRING_INDEX(email,'@',1)
+FROM sakila.customer;
+
+
+Returns everything before @.
+
+UPPER and LOWER
+
+Used to convert text to uppercase or lowercase.
+
+SELECT title,
+UPPER(title),
+LOWER(title)
+FROM sakila.film
+WHERE UPPER(title) LIKE '%LOVELY%'
+   OR UPPER(title) LIKE '%MAN%';
+
+
+Used for case-insensitive searching.
+
+LEFT and RIGHT
+
+Used to extract characters from the left or right side.
+
+SELECT LEFT(title,1)
+FROM sakila.film;
+
+
+Returns the first character of the title.
+
+CASE WHEN (Conditional Logic)
+
+Used to apply conditions and create categories.
+
+SELECT last_name,
+CASE
+  WHEN LEFT(last_name,1) BETWEEN 'A' AND 'M' THEN 'Group A-M'
+  WHEN LEFT(last_name,1) BETWEEN 'N' AND 'Z' THEN 'Group N-Z'
+  ELSE 'Other'
+END AS group_label
+FROM sakila.customer;
+
+
+Used for grouping and classification.
+
+REPLACE
+
+Used to replace characters or words in a string.
+
+SELECT title,
+REPLACE(title,'a','x') AS cleaned_title
+FROM sakila.film
+WHERE title LIKE '% %';
+
+
+This replaces a with x wherever it appears.
+
+REGEXP (Regular Expressions)
+Not containing 3 consecutive vowels
+SELECT cust_id, last_name
+FROM sakila.customer
+WHERE last_name REGEXP '[^aeiouAEIOU]{3}';
+
+
+Explanation:
+
+[^aeiouAEIOU] → not vowels
+
+{3} → exactly 3 times
+
+Matches names with 3 consecutive consonants
+
+Ends with vowel
+SELECT LOWER(title)
+FROM sakila.film
+WHERE title REGEXP '[aeiouAEIOU]$';
+
+
+$ means end of the string.
+
+SELECT title,
+RIGHT(title,2)
+FROM sakila.film
+WHERE title REGEXP '[eE]$';
+
+
+Returns titles ending with e or E.
+
+COUNT
+
+Used to count number of rows.
+
+SELECT COUNT(*) FROM sakila.customer;
+
+Math Functions
+POWER
+SELECT POWER(3,2);
+
+
+Returns 9.
+
+MOD
+SELECT MOD(10,3);
+
+
+Returns remainder 1.
+
+CAST (Type Conversion)
+
+Used to convert one data type to another.
+
+SELECT CAST(amount AS DECIMAL(10,2))
+FROM payments;
+
+DECIMAL, SET, ALTER
+
+DECIMAL → stores precise numeric values
+
+SET → assigns values
+
+ALTER → modifies table structure
+
+FLOOR, CEIL, RAND
+SELECT cust_id,
+(RAND()*100) AS random_score
+FROM sakila.customer
+LIMIT 5;
+
+
+RAND() → generates random number
+
+CEIL() → rounds up
+
+FLOOR() → rounds down
+
+Date Functions
+DATEDIFF
+SELECT DATEDIFF('2025-01-10','2025-01-01');
+
+
+Returns number of days between dates.
+
+DAYNAME and MONTHNAME
+SELECT DAYNAME(NOW()), MONTHNAME(NOW());
+
+
+Used for time-series analysis:
+
+Day-level analysis
+
+Month-level analysis
+
+NOW and CURDATE
+SELECT NOW();
+SELECT CURDATE();
+
+
+NOW() → date + time
+
+CURDATE() → only date
+
+Typecasting
+
+Typecasting means converting one data type into another using CAST() or CONVERT().
+
+Example:
+
+SELECT CAST('123' AS INT);
