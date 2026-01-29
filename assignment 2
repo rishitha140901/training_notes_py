@@ -1,0 +1,72 @@
+SELECT first_name, last_name, email, COUNT(*) AS duplicate_count
+FROM sakila.customer
+GROUP BY first_name, last_name, email
+HAVING COUNT(*) > 1;
+
+SELECT 
+SUM(LENGTH(LOWER(description)) - LENGTH(REPLACE(LOWER(description), 'a', ''))) 
+AS a_count
+FROM sakila.film;
+
+SELECT
+SUM(LENGTH(LOWER(description)) - LENGTH(REPLACE(LOWER(description), 'a', ''))) AS a_count,
+SUM(LENGTH(LOWER(description)) - LENGTH(REPLACE(LOWER(description), 'e', ''))) AS e_count,
+SUM(LENGTH(LOWER(description)) - LENGTH(REPLACE(LOWER(description), 'i', ''))) AS i_count,
+SUM(LENGTH(LOWER(description)) - LENGTH(REPLACE(LOWER(description), 'o', ''))) AS o_count,
+SUM(LENGTH(LOWER(description)) - LENGTH(REPLACE(LOWER(description), 'u', ''))) AS u_count
+FROM sakila.film;
+
+SELECT 
+customer_id,
+MONTH(payment_date) AS month,
+SUM(amount) AS total_amount
+FROM sakila.payment
+GROUP BY customer_id, month;
+
+SELECT 
+customer_id,
+YEAR(payment_date) AS year,
+SUM(amount) AS total_amount
+FROM sakila.payment
+GROUP BY customer_id, year;
+	
+SELECT 
+customer_id,
+WEEK(payment_date) AS week,
+SUM(amount) AS total_amount
+FROM sakila.payment
+GROUP BY customer_id, week;
+
+
+SELECT 
+CASE 
+    WHEN MOD(YEAR('2024-01-01'), 400) = 0 THEN 'Leap Year'
+    WHEN MOD(YEAR('2024-01-01'), 100) = 0 THEN 'Not a Leap Year'
+    WHEN MOD(YEAR('2024-01-01'), 4) = 0 THEN 'Leap Year'
+    ELSE 'Not a Leap Year'
+END AS leap_year_result;
+
+
+SELECT 
+DATEDIFF(
+    CONCAT(YEAR(CURDATE()), '-12-31'),
+    CURDATE()
+) AS days_remaining;
+
+SELECT 
+payment_date,
+CONCAT('Q', QUARTER(payment_date)) AS quarter
+FROM sakila.payment;
+
+
+SELECT 
+CONCAT(
+TIMESTAMPDIFF(YEAR, '2001-09-14', CURDATE()), ' years, ',
+MOD(TIMESTAMPDIFF(MONTH, '2001-09-14', CURDATE()), 12), ' months, ',
+DATEDIFF(
+    CURDATE(),
+    DATE_ADD('2001-09-14', 
+    INTERVAL TIMESTAMPDIFF(MONTH, '2001-09-14', CURDATE()) MONTH)
+), ' days'
+) AS age;
+
