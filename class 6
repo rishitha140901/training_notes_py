@@ -1,0 +1,209 @@
+Subqueries
+
+A subquery is a query written inside another query.
+The inner query runs first, and its result is used by the outer query.
+
+Subqueries are commonly used with:
+
+IN
+
+EXISTS
+
+=
+
+SELECT clause
+
+Subquery using IN
+
+Used when the inner query returns multiple values.
+
+SELECT first_name, last_name
+FROM sakila.customer
+WHERE address_id IN (
+    SELECT address_id
+    FROM sakila.customer
+    WHERE customer_id = 1
+);
+
+
+Explanation:
+
+Inner query finds the address_id of customer 1
+
+Outer query finds all customers with the same address
+
+Inner query executes first
+
+Subquery with GROUP BY and HAVING
+SELECT actor_id, first_name, last_name
+FROM sakila.actor
+WHERE actor_id IN (
+    SELECT actor_id
+    FROM sakila.film_actor
+    GROUP BY actor_id
+    HAVING COUNT(film_id) > 10
+);
+
+
+Explanation:
+
+Inner query finds actors who acted in more than 10 films
+
+Outer query fetches actor details
+
+Used to filter based on aggregated results
+
+Subqueries in SELECT clause
+
+Subqueries can be used to return a calculated value per row.
+
+SELECT actor_id, first_name, last_name,
+(
+    SELECT COUNT(*)
+    FROM sakila.film_actor
+    WHERE film_actor.actor_id = actor.actor_id
+) AS film_count
+FROM sakila.actor;
+
+
+Explanation:
+
+For each actor, subquery counts number of films
+
+Subquery runs once per actor
+
+Output includes a new column film_count
+
+Derived Tables
+
+A derived table is a subquery used in the FROM clause.
+It acts like a temporary table.
+
+SELECT *
+FROM (
+    SELECT actor_id, COUNT(*) AS film_count
+    FROM sakila.film_actor
+    GROUP BY actor_id
+) AS actor_films;
+
+
+Explanation:
+
+Inner query creates a temporary result
+
+Outer query uses it like a table
+
+Derived tables exist only during query execution
+
+Subquery Failure Case
+
+Subqueries fail when they return more than one value, but SQL expects one value.
+
+SELECT first_name,
+(
+    SELECT address_id
+    FROM sakila.address
+    WHERE district = 'California'
+) AS cali_add
+FROM sakila.customer;
+
+
+Why this fails:
+
+District California has multiple address_id values
+
+Subquery returns more than one row
+
+SELECT expects a single value
+
+✔ Fix: use IN or limit results.
+
+Correlated Subqueries
+
+A correlated subquery refers to a column from the outer query.
+It runs once for each row in the outer query.
+
+SELECT title,
+(
+    SELECT COUNT(*)
+    FROM sakila.film_actor fa
+    WHERE fa.film_id = f.film_id
+) AS actor_count
+FROM sakila.film f;
+
+
+Explanation:
+
+For each film, subquery counts number of actors
+
+Uses f.film_id from outer query
+
+Slower than normal subqueries but very powerful
+
+Difference: Subquery vs Correlated Subquery
+
+Normal subquery → runs once
+
+Correlated subquery → runs for every row
+
+Cardinality
+
+Cardinality defines relationships between tables.
+
+Types of Cardinality:
+
+One-to-One
+
+One-to-Many
+
+Many-to-Many
+
+Many-to-Many Relationship
+
+When:
+
+One record in table A relates to many records in table B
+
+And vice versa
+
+Example:
+
+Actors ↔ Films
+
+Bridge Table (Junction Table)
+
+Many-to-many relationships require a bridge table.
+
+Example:
+
+film_actor table
+
+Contains:
+
+film_id
+
+actor_id
+
+This table:
+
+Breaks many-to-many into two one-to-many relationships
+
+Stores relationships, not actual data
+
+Friendship Table (Concept)
+
+Used when:
+
+One person can have many friends
+
+Same table references itself
+
+Example:
+
+friendship
+-----------
+user_id
+friend_id
+
+
+Both columns reference the same table.
