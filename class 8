@@ -1,0 +1,126 @@
+What is a CTE?
+
+A CTE is a temporary result set that you can reference within a query.
+
+Defined using WITH.
+
+Syntax
+WITH cte_name AS (
+    SELECT ...
+)
+SELECT *
+FROM cte_name;
+
+Example
+WITH high_payments AS (
+    SELECT *
+    FROM payment
+    WHERE amount > 5
+)
+SELECT *
+FROM high_payments;
+
+Benefits
+
+Improves readability
+
+Makes complex queries easier
+
+Replaces nested subqueries
+
+2️⃣ Recursive CTE
+What is a Recursive CTE?
+
+Used when:
+
+Data has hierarchy
+
+Example: employee → manager
+
+Structure
+
+Anchor query (base case)
+
+Recursive query (calls itself)
+
+Example
+WITH RECURSIVE emp_hierarchy AS (
+    SELECT employee_id, manager_id
+    FROM employee
+    WHERE manager_id IS NULL
+
+    UNION ALL
+
+    SELECT e.employee_id, e.manager_id
+    FROM employee e
+    JOIN emp_hierarchy h
+    ON e.manager_id = h.employee_id
+)
+SELECT *
+FROM emp_hierarchy;
+
+3️⃣ Views
+What is a View?
+
+A view is a virtual table based on a SQL query.
+
+Stores query, not data
+
+Always shows latest data
+
+Create View
+CREATE VIEW customer_payments AS
+SELECT customer_id, SUM(amount) AS total
+FROM payment
+GROUP BY customer_id;
+
+Use View
+SELECT *
+FROM customer_payments;
+
+Advantages
+
+Security (hide columns)
+
+Simplicity
+
+Reusability
+
+4️⃣ Exam Pattern
+Exam includes:
+
+✅ Query writing
+✅ Validation script (to check correctness)
+
+Validation script examples:
+
+Count records
+
+Compare totals
+
+Check NULLs
+
+Example:
+
+SELECT COUNT(*)
+FROM result_table;
+
+🧠 One-Line Memory Notes (EXAM GOLD)
+
+Many-to-many → Bridge table
+
+Same table relationship → Self join
+
+Filter rows → WHERE
+
+Filter groups → HAVING
+
+Temporary query result → CTE
+
+Hierarchy → Recursive CTE
+
+Data warehouse → Denormalized
+
+Check existence → EXISTS
+
+Reusable query → VIEW
