@@ -1,1 +1,168 @@
-joins need to complete 
+Bridge Table (Junction Table)
+What is a Bridge Table?
+
+A bridge table is used to handle a many-to-many relationship between two tables.
+
+Why do we need it?
+
+Relational databases cannot store many-to-many relationships directly, so we break it into two one-to-many relationships using a bridge table.
+
+Example
+
+One actor → many films
+
+One film → many actors
+
+Tables
+
+actor
+
+film
+
+film_actor ← bridge table
+
+Bridge table contains:
+
+Foreign key from table 1
+
+Foreign key from table 2
+
+film_actor
+-----------
+actor_id
+film_id
+
+Key rule
+
+Many-to-many = bridge table
+
+2️⃣ SQL JOINs
+What is a JOIN?
+
+A JOIN is used to combine rows from two or more tables based on a related column.
+
+INNER JOIN
+
+Returns only matching rows from both tables.
+
+SELECT *
+FROM customer c
+JOIN rental r
+ON c.customer_id = r.customer_id;
+
+LEFT JOIN
+
+Returns all rows from the left table, even if there is no match in the right table.
+
+SELECT *
+FROM customer c
+LEFT JOIN rental r
+ON c.customer_id = r.customer_id;
+
+
+Used when:
+
+You want all records, including unmatched ones.
+
+RIGHT JOIN
+
+Returns all rows from the right table.
+
+(MySQL supports it but used less often.)
+
+FULL OUTER JOIN
+
+Returns all rows from both tables.
+(MySQL does not support it directly.)
+
+👉 Simulated using UNION.
+
+3️⃣ Normalization
+What is Normalization?
+
+Normalization is the process of organizing data to:
+
+Reduce redundancy
+
+Avoid anomalies
+
+Improve data integrity
+
+🔹 1NF (First Normal Form)
+
+Rules:
+
+Atomic values (no multiple values in one column)
+
+No repeating groups
+
+❌ Not 1NF:
+
+phone_numbers = 12345, 67890
+
+
+✅ 1NF:
+
+phone_number
+12345
+67890
+
+🔹 2NF (Second Normal Form)
+
+Rules:
+
+Must be in 1NF
+
+No partial dependency
+
+Applies to tables with composite primary keys
+
+📌 Partial dependency:
+
+Non-key column depends on part of the primary key
+
+🔹 3NF (Third Normal Form)
+
+Rules:
+
+Must be in 1NF & 2NF
+
+No transitive dependency
+
+📌 Transitive dependency:
+
+A non-key column depends on another non-key column
+
+🔹 Denormalization
+
+Opposite of normalization
+
+Used in Data Warehousing
+
+Improves query performance
+
+Allows redundancy
+
+📌 OLTP → normalized
+📌 OLAP / Data Warehouse → denormalized
+
+4️⃣ WHERE EXISTS
+What is EXISTS?
+
+EXISTS checks whether a subquery returns any rows.
+
+Returns TRUE or FALSE
+
+Stops searching once a match is found (efficient)
+
+Example
+SELECT *
+FROM customer c
+WHERE EXISTS (
+    SELECT 1
+    FROM rental r
+    WHERE r.customer_id = c.customer_id
+);
+
+
+👉 Returns customers who have at least one rental
