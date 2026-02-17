@@ -1,0 +1,135 @@
+Strings
+Escape Character
+
+\n → new line
+
+🔹 String Slicing
+s = "hello world"
+
+s[0:]      # hello world
+s[:5]      # hello
+s[0:5:2]   # hlo
+
+
+s[start:end:step]
+
+🔹 String Properties
+
+Immutable (cannot change characters)
+
+Concatenation → +
+
+🔹 String Methods
+s.upper()
+s.lower()
+s.split()
+s.partition("e")
+s.count("o")
+s.find("o")
+s.isalnum()
+s.isalpha()
+s.isspace()
+s.istitle()
+
+🔹 Lists
+
+Mutable
+
+Can store multiple data types
+
+l = [1, "a", 3.5]
+
+Methods
+l.append()
+l.pop()
+l.reverse()
+
+🔹 Nested List (Matrix)
+l1 = [1,2,3]
+l2 = [4,5,6]
+l3 = [7,8,9]
+
+matrix = [l1,l2,l3]
+
+🔹 List Comprehension
+[x**2 for x in range(1,11)]
+
+🔹 Tuples
+
+Immutable
+
+Uses ()
+
+x = (1,2,3)
+
+
+Convert tuple to list:
+
+l = list(x)
+
+🔹 Sets
+
+Unordered
+
+Unique values only
+
+No indexing
+
+s = {1,2,3,4}
+
+
+If you add duplicate → ignored.
+
+🔹 Dictionary
+my_dict = {
+    True: "val1",
+    "key2": "val2",
+    "key3": [1,"b",3],
+    "key4": 123
+}
+
+
+Access:
+
+my_dict["key2"]
+my_dict["key3"][1].upper()
+
+🔹 Dictionary Comprehension
+d = {x: x**2 for x in range(1,11)}
+
+🔹 Shallow Copy vs Deep Copy
+import copy
+
+original = [[1,2],[3,4]]
+
+shallow = copy.copy(original)
+deepcopy = copy.deepcopy(original)
+
+
+Shallow → changes affect original
+
+Deep → fully independent copy
+
+🔹 Functions
+def print_num(n):
+    for i in range(1, 6):
+        print(i * n)
+
+print_num(8)
+
+🔹 print vs return
+print:
+
+Cannot store result
+
+def add(a,b):
+    print(a+b)
+
+return:
+
+Can assign to variable
+
+def add(a,b):
+    return a+b
+
+x = add(5,6)
