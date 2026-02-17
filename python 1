@@ -1,0 +1,129 @@
+What is Python?
+
+High-level, interpreted programming language
+
+Easy to read and write
+
+Used for:
+
+Application development
+
+UI building
+
+Automation
+
+Data pipelines
+
+Backend systems
+
+AI/ML
+
+🔹 Basic Data Types
+1. Integer
+a = 7
+
+2. Float
+b = 3.5
+
+3. String
+name = "Bunny"
+
+4. Boolean
+True
+False
+
+🔹 Type Checking
+type(a)
+
+
+Tells us the data type.
+
+🔹 Type Conversion
+✅ Implicit Conversion
+
+Python automatically converts:
+
+5 + 2.0   # 7.0 (float)
+
+✅ Explicit Conversion
+
+We manually convert:
+
+str(7)
+int("10")
+float(5)
+
+🔹 Important Note (Built-in Functions)
+
+Do NOT overwrite built-in functions:
+
+sum = 10   # ❌ bad practice
+
+
+Instead use:
+
+sum_
+str_
+float_
+
+🔹 Operators
+Arithmetic Operators
+Operator	Meaning
++	Addition
+-	Subtraction
+*	Multiplication
+/	Division
+%	Remainder
+**	Power
+//	Floor division
+Comparison Operators
+
+< , > , <= , >= , == , !=
+
+Logical Operators
+
+and
+
+or
+
+not
+
+Assignment Operators
+x = 10
+x += 5    # x = x + 5 → 15
+
+
+Important:
+
+x = +5   # x becomes 5 (NOT addition)
+
+🔹 Input Function
+name = input("Enter your name: ")
+print("Hello", name)
+print(type(name))
+
+
+⚠ input() always returns string.
+
+🔹 f-Strings (Formatted Strings)
+age = 48
+year = 1978
+x = f"I am {age} years old"
+
+🔹 .format() Method
+"I am {} years old".format(age)
+
+🔹 Branching (If-Else)
+i = 4
+
+if i < 3:
+    print("less than 3")
+elif i < 5:
+    print("less than 5")
+elif i < 12:
+    print("i am stupid")
+else:
+    print("13 or more")
+
+
+Indentation is very important in Python.
