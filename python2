@@ -1,0 +1,45 @@
+For Loop
+numbers = [1,2,3,4,5,6]
+sum_ = 0
+
+for i in numbers:
+    sum_ += i
+    print(i)
+
+print(sum_)
+
+🔹 range()
+for i in range(5):
+    print(i)
+
+
+range(start, stop, step)
+
+🔹 Loop Using Index
+char = [1,32,5,6,7,9]
+
+for i in range(len(char)):
+    print(f"index {i} has value {char[i]}")
+
+🔹 Reverse String (Using Loop)
+s = "bunny"
+x = ""
+
+for i in range(len(s)):
+    x = s[i] + x
+
+print(x)
+
+🔹 While Loop
+i = 1
+while i <= 5:
+    print(i)
+    i += 1
+
+🔹 Break Statement
+for i in "string":
+    if i == "r":
+        break
+    print(i)
+
+print("the end")
