@@ -1,0 +1,114 @@
+CLASS 5 – Modules, Errors & File Handling
+🔹 Modules and Libraries
+
+Module = Python file (.py file)
+
+Example:
+
+import math
+
+Library = Collection of modules.
+
+Example:
+
+math
+
+random
+
+datetime
+
+🔹 Errors and Exception Handling
+
+There are two types:
+
+Syntax Error
+
+Runtime Error (Exception)
+
+Example runtime error:
+
+print(10/0)  # ZeroDivisionError
+🔹 try – except
+
+Used to handle errors.
+
+try:
+    x = 10 / 0
+except:
+    print("Error occurred")
+
+Instead of program crashing, it prints message.
+
+🔹 Specific Exception
+try:
+    f = open("testfile.txt", "r")
+except IOError:
+    print("File not found")
+
+Better to specify exception type.
+
+🔹 try – except – else – finally
+try:
+    f = open("test.txt", "w")
+except IOError:
+    print("File error")
+else:
+    print("Written successfully")
+finally:
+    print("This always runs")
+
+else runs if no error
+
+finally always runs
+
+🔹 File Handling
+
+Modes:
+
+"r" → read
+
+"w" → write (overwrites)
+
+"a" → append
+
+"r+" → read + write
+
+Reading file
+with open("file.txt", "r") as f:
+    for line in f:
+        print(line.strip())
+
+strip() removes newline.
+
+Writing file
+with open("file.txt", "w") as f:
+    f.write("Hello World")
+
+⚠ Overwrites old content.
+
+Append file
+with open("file.txt", "a") as f:
+    f.write("New line")
+Read file into list
+with open("file.txt", "r") as f:
+    lines = f.readlines()
+
+print(lines)
+
+Output:
+
+['line1\n', 'line2\n']
+seek()
+
+Moves pointer position.
+
+with open("file.txt", "r+") as f:
+    f.seek(10)
+    f.write("ABC")
+
+It writes at 10th position.
+
+Database Connectivity
+import sqlite3
+
+Used to connect Python with database.
