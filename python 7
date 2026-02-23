@@ -1,0 +1,299 @@
+CLASS 7 – Advanced OOP Concepts (Detailed Notes)
+🔷 1. Encapsulation
+What is Encapsulation?
+
+Encapsulation means:
+
+Binding data (variables) and methods (functions) inside a class.
+
+Restricting direct access to some variables.
+
+It is used for data protection.
+
+Why do we need Encapsulation?
+
+Imagine:
+You don’t want users to directly change account balance in a bank system.
+
+Instead of:
+
+account.balance = -100000
+
+You control access through methods.
+
+Private Variables
+
+In Python, we use:
+
+__variable
+
+Example:
+
+class BankAccount:
+    def __init__(self, balance):
+        self.__balance = balance   # private variable
+
+    def deposit(self, amount):
+        self.__balance += amount
+
+    def get_balance(self):
+        return self.__balance
+
+Usage:
+
+acc = BankAccount(1000)
+acc.deposit(500)
+print(acc.get_balance())
+
+You CANNOT directly access:
+
+acc.__balance   # ❌ Error
+Important Note
+
+Python does not truly make variable fully private.
+It does name mangling internally.
+
+You can still access using:
+
+acc._BankAccount__balance
+
+But we should not do that.
+
+🔷 2. Composition
+
+Composition means:
+One class contains another class.
+
+Instead of inheritance (is-a relationship),
+Composition is has-a relationship.
+
+Example:
+
+Car has an Engine.
+
+Laptop has a Processor.
+
+Example:
+class Engine:
+    def start(self):
+        print("Engine starting...")
+
+class Car:
+    def __init__(self):
+        self.engine = Engine()   # Car HAS an engine
+
+    def start_car(self):
+        self.engine.start()
+
+Usage:
+
+c = Car()
+c.start_car()
+
+Here:
+
+Car does not inherit Engine.
+
+Car wraps Engine inside it.
+
+This is composition.
+
+When to use Composition instead of Inheritance?
+
+Use composition when:
+
+You want flexibility.
+
+You don’t want tight coupling.
+
+The relationship is “has-a” not “is-a”.
+
+🔷 3. Polymorphism
+
+Polymorphism means:
+Same method name → different behavior.
+
+“Poly” = many
+“Morph” = forms
+
+Example 1 – Method Overriding
+class Animal:
+    def speak(self):
+        print("Animal sound")
+
+class Dog(Animal):
+    def speak(self):
+        print("Bark")
+
+class Cat(Animal):
+    def speak(self):
+        print("Meow")
+
+Usage:
+
+animals = [Dog(), Cat()]
+
+for a in animals:
+    a.speak()
+
+Output:
+
+Bark
+Meow
+
+Same method name → different behavior.
+
+Example 2 – Built-in Polymorphism
+print(len("hello"))
+print(len([1,2,3]))
+
+len() works for different types.
+
+🔷 4. Duck Typing
+
+Duck typing means:
+
+"If it behaves like a duck, treat it like a duck."
+
+Python does not check object type.
+It checks behavior.
+
+Example:
+
+class Bird:
+    def fly(self):
+        print("Bird flying")
+
+class Airplane:
+    def fly(self):
+        print("Airplane flying")
+
+def start_flying(obj):
+    obj.fly()
+
+start_flying(Bird())
+start_flying(Airplane())
+
+Python doesn’t care about type.
+It only checks if object has .fly() method.
+
+That is duck typing.
+
+🔷 5. Instance Variables vs Class Variables
+Instance Variables
+
+Belong to object.
+
+Example:
+
+class Student:
+    def __init__(self, name):
+        self.name = name
+
+Each object has separate value.
+
+Class Variables
+
+Shared by all objects.
+
+Example:
+
+class Student:
+    school = "UCO"   # class variable
+
+    def __init__(self, name):
+        self.name = name
+
+Usage:
+
+s1 = Student("Rishitha")
+s2 = Student("Bunny")
+
+print(s1.school)
+print(s2.school)
+
+Both share same school.
+
+Difference:
+Instance Variable	Class Variable
+Belongs to object	Belongs to class
+Separate copy	Shared copy
+🔷 6. Class Methods
+
+Defined using @classmethod
+
+Used to modify class variables.
+
+Example:
+
+class Student:
+    school = "UCO"
+
+    @classmethod
+    def change_school(cls, name):
+        cls.school = name
+
+Usage:
+
+Student.change_school("OU")
+🔷 7. Static Methods
+
+Defined using @staticmethod
+
+Does not use self
+
+Does not use cls
+
+Just utility method
+
+Example:
+
+class MathUtils:
+
+    @staticmethod
+    def add(a, b):
+        return a + b
+
+Usage:
+
+print(MathUtils.add(5, 3))
+🔷 8. Dynamic Extension
+
+Python allows adding attributes dynamically.
+
+Example:
+
+class Person:
+    pass
+
+p = Person()
+p.name = "Rishitha"
+
+print(p.name)
+
+We added attribute outside class.
+
+🔷 9. Decorators (Basic Understanding)
+
+Decorator modifies function behavior without changing original function.
+
+Example:
+
+def my_decorator(func):
+    def wrapper():
+        print("Before function")
+        func()
+        print("After function")
+    return wrapper
+
+@my_decorator
+def say_hello():
+    print("Hello")
+
+say_hello()
+
+Output:
+
+Before function
+Hello
+After function
