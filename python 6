@@ -1,0 +1,49 @@
+CLASS 6 – OOP (Object Oriented Programming)
+🔹 Class and Object
+
+Class = Blueprint
+Object = Instance of class
+
+Example:
+
+class Student:
+    def __init__(self, name):
+        self.name = name
+
+s1 = Student("Rishitha")
+
+s1 is object.
+
+🔹 str()
+
+Controls what prints when object is printed.
+
+class Student:
+    def __init__(self, name):
+        self.name = name
+
+    def __str__(self):
+        return f"Student name is {self.name}"
+
+s1 = Student("Rishitha")
+print(s1)
+🔹 Inheritance
+
+Child class inherits from parent class.
+
+class Animal:
+    def speak(self):
+        print("Animal speaks")
+
+class Dog(Animal):
+    def bark(self):
+        print("Dog barks")
+🔹 Method Overriding
+
+Child changes parent method.
+
+🔹 Abstraction
+
+Hiding internal implementation details.
+
+User sees only important features.
