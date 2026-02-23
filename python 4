@@ -1,0 +1,158 @@
+CLASS 4 – Iterators, Generators, Functional Programming
+🔹 Iterator
+
+An iterator is an object that allows us to access elements one by one from a collection (like list, tuple, string).
+
+In Python:
+
+iter() → converts iterable into iterator
+
+next() → gives next element
+
+Example:
+
+lst = [10, 20, 30]
+
+it = iter(lst)
+
+print(next(it))  # 10
+print(next(it))  # 20
+print(next(it))  # 30
+
+Each time we call next(), it moves forward.
+
+If we call next() again after elements are finished →
+It gives StopIteration error.
+
+Important:
+
+List is iterable.
+
+Iterator is the object that actually fetches elements one by one.
+
+🔹 Generator
+
+Generator is a special type of function that:
+
+Uses yield
+
+Produces values one by one
+
+Does not store entire sequence in memory
+
+This makes it memory efficient.
+
+Example: Fibonacci Generator
+def genfibon(n):
+    a = 1
+    b = 1
+
+    for i in range(n):
+        yield a
+        a, b = b, a + b
+
+If we do:
+
+genfibon(5)
+
+Nothing prints.
+
+Why?
+Because generator only creates an object in memory.
+
+To actually get values:
+
+for num in genfibon(5):
+    print(num)
+
+Now it prints Fibonacci numbers.
+
+Difference between return and yield:
+return	yield
+Ends function	Pauses function
+Returns once	Returns multiple times
+Stores full data	Generates one by one
+🔹 Functional Programming
+
+Python supports functional style programming.
+
+🔹 map()
+
+map() applies a function to every element of a list.
+
+Syntax:
+
+map(function, iterable)
+
+Example:
+
+def square(x):
+    return x * x
+
+lst = [1, 2, 3, 4]
+
+result = map(square, lst)
+
+print(list(result))
+
+Output:
+
+[1, 4, 9, 16]
+
+map does not return list directly — it returns map object.
+So we convert using list().
+
+🔹 Lambda Function
+
+Lambda is an anonymous function (function without name).
+
+Syntax:
+
+lambda arguments: expression
+
+Example:
+
+max_find = lambda a, b: a if a > b else b
+print(max_find(10, 5))
+
+Used mostly inside map, filter, reduce.
+
+🔹 reduce()
+
+reduce() reduces entire list into single value.
+
+We import it from functools.
+
+Example:
+
+from functools import reduce
+
+lst = [1, 2, 3, 4]
+
+result = reduce(lambda a, b: a + b, lst)
+
+print(result)
+
+Output:
+
+10
+
+It keeps combining elements step by step.
+
+🔹 filter()
+
+Filter removes elements that do not satisfy condition.
+
+Example:
+
+lst = [1, 2, 3, 4, 5, 6]
+
+even = filter(lambda x: x % 2 == 0, lst)
+
+print(list(even))
+
+Output:
+
+[2, 4, 6]
+
+Filter keeps only True condition values.
